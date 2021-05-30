@@ -13,6 +13,7 @@ let recording = [];
 let counter = 0;
 let clearObj;
 let scaleLevel = 1;
+let filterColor = "";
 
 let constraint = {
     audio: true, video: true
@@ -78,7 +79,19 @@ usermediaPromise.
         canvas.width = videoElem.videoWidth;
 
         let tool = canvas.getContext("2d");
-        tool.drawImage(videoElem, 0, 0);
+        
+        // tool.drawImage(videoElem, 0, 0);
+         
+        // change after scaling the video
+        tool.scale(scaleLevel, scaleLevel);
+        const x = (tool.canvas.width / scaleLevel - videoElem.videoWidth) / 2;
+        const y = (tool.canvas.height / scaleLevel - videoElem.videoHeight) / 2;
+        tool.drawImage(videoElem, x, y);
+
+        if (filterColor) {
+            tool.fillStyle = filterColor;
+            tool.fillRect(0, 0, canvas.width, canvas.height);
+        }
 
         let url = canvas.toDataURL(); // function provided by canvas
         let a = document.createElement("a");
@@ -94,7 +107,7 @@ usermediaPromise.
 
     for(let i=0; i<filterArr.length; i++){
         filterArr[i].addEventListener("click", function(){
-            let filterColor = filterArr[i].style.backgroundColor;
+            filterColor = filterArr[i].style.backgroundColor;
             filterOverlayContainer.style.backgroundColor = filterColor;
         })
     }
@@ -136,3 +149,4 @@ usermediaPromise.
         }
     })
 // to get video elem height and width -> videoHeight and videoWidth
+// keep the image centered after scaling
