@@ -4,13 +4,13 @@
 
 body{
     margin: 0px;
+    overflow: hidden;
 }
 
 .video-container{
     background-color: black;
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
 }
 
 .video{
@@ -18,9 +18,33 @@ body{
     width: 100%;
 }
 
+.zoom-parent{
+    width: 2.75rem;
+    height: 6rem;
+    position: fixed;
+    top: 12%;
+    right: 61px;
+    border: 1px solid;
+    background-color: #444;
+    border-radius: 6px;
+    z-index:4;
+}
+
+.zoom-parent > *{
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon{
+    font-size: 140%;
+    color:white;
+}
+
 .btn-container{
     position: fixed;
-    top: 30%;
+    top: 37%;
     right: 2.5rem;
     height: 5rem;
     width: 5rem;
@@ -44,7 +68,7 @@ body{
 }
 
 .position-top{
-    top: 45%;
+    top: 52%;
 }
 
 .record-animation{
@@ -80,17 +104,17 @@ body{
 }
 
 .filter_btn-container{
-    height: 17rem;
-    width: 7rem;
+    height: 21rem;
+    width: 5.5rem;
     position: fixed;
     top: calc( (100vh - 17rem)/2);
-    left: 10vw;
+    left: 5vw;
     z-index:4
 }
 
 .filter{
     height: 20%;
-    border: 1px solid;
+    border: 1px solid white;
     /* background-color , background-image will be blended */
     background-blend-mode: color-burn;
     background-image: url(https://picsum.photos/200/300);

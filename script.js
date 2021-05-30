@@ -3,13 +3,16 @@ let recordBtn = document.querySelector(".record");
 let captureImgBtn = document.querySelector(".position-top");
 let filterArr = document.querySelectorAll(".filter");
 let filterOverlayContainer = document.querySelector(".filter_overlay-container");
-let timer = document.querySelector(".timing")
+let timer = document.querySelector(".timing");
+let minusBtn = document.querySelector(".minus");
+let plusBtn = document.querySelector(".plus");
 
 let mediarecordingObjectForCurrStream;
 let isRecording = false;
 let recording = [];
 let counter = 0;
 let clearObj;
+let scaleLevel = 1;
 
 let constraint = {
     audio: true, video: true
@@ -118,4 +121,18 @@ usermediaPromise.
         timer.style.display = "none";
         clearInterval(clearObj);
     }
+
+    plusBtn.addEventListener("click", function(){
+        if(scaleLevel < 1.7){
+            scaleLevel = scaleLevel + 0.1;
+            videoElem.style.transform = `scale(${scaleLevel})`;
+        }
+    })
+
+    minusBtn.addEventListener("click", function(){
+        if(scaleLevel > 1){
+            scaleLevel = scaleLevel - 0.1;
+            videoElem.style.transform = `scale(${scaleLevel})`;
+        }
+    })
 // to get video elem height and width -> videoHeight and videoWidth
