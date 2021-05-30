@@ -1,6 +1,6 @@
 let videoElem = document.querySelector("video");
 let recordBtn = document.querySelector(".record");
-let captureImgBtn = document.querySelector(".clickBtn");
+let captureImgBtn = document.querySelector(".position-top");
 let filterArr = document.querySelectorAll(".filter");
 let filterOverlayContainer = document.querySelector(".filter_overlay-container");
 let timer = document.querySelector(".timing")
@@ -55,11 +55,11 @@ usermediaPromise.
 
         if(isRecording == false){
             mediarecordingObjectForCurrStream.start();
-            recordBtn.innerText = "Recording....";
+            recordBtn.classList.add("record-animation");
             startTimer();
         }else{
             mediarecordingObjectForCurrStream.stop();
-            recordBtn.innerText = "Record";
+            recordBtn.classList.remove("record-animation");
             stopTimer();
         }
 
@@ -67,6 +67,9 @@ usermediaPromise.
     })
 
     captureImgBtn.addEventListener("click", function(){
+        let innerDiv = captureImgBtn.querySelector(".clickBtn");
+        innerDiv.classList.add("capture-animation");
+
         let canvas = document.createElement("canvas");
         canvas.height = videoElem.videoHeight;
         canvas.width = videoElem.videoWidth;
@@ -80,6 +83,10 @@ usermediaPromise.
         a.href = url;
         a.click();
         a.remove();
+
+        setTimeout(function(){
+            innerDiv.classList.remove("capture-animation")
+        }, 1000)
     })
 
     for(let i=0; i<filterArr.length; i++){
