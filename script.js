@@ -6,6 +6,7 @@ let filterOverlayContainer = document.querySelector(".filter_overlay-container")
 let timer = document.querySelector(".timing");
 let minusBtn = document.querySelector(".minus");
 let plusBtn = document.querySelector(".plus");
+let gallery = document.querySelector(".gallery-button")
 
 let mediarecordingObjectForCurrStream;
 let isRecording = false;
@@ -37,13 +38,17 @@ usermediaPromise.
             // convert recording to url
             // type -> MINE type
             const blob = new Blob(recording, { type: 'video/mp4' });
-            const url = window.URL.createObjectURL(blob);
 
-            let a = document.createElement("a");
-            a.download = "file.mp4";
-            a.href = url;
-            a.click();
+            // const url = window.URL.createObjectURL(blob);
+            // let a = document.createElement("a");
+            // a.download = "file.mp4";
+            // a.href = url;
+            // a.click();
             recording = []
+
+            if(db){
+                addMediaToGallery(blob, "video");
+            }
         })
 
     }).catch(function (err) {
@@ -56,6 +61,9 @@ usermediaPromise.
             alert("First select the devices");
             return;
         }
+
+        filterColor = "";
+        filterOverlayContainer.style.backgroundColor = "";
 
         if(isRecording == false){
             mediarecordingObjectForCurrStream.start();
@@ -94,11 +102,15 @@ usermediaPromise.
         }
 
         let url = canvas.toDataURL(); // function provided by canvas
-        let a = document.createElement("a");
-        a.download = "image.png";
-        a.href = url;
-        a.click();
-        a.remove();
+        // let a = document.createElement("a");
+        // a.download = "image.png";
+        // a.href = url;
+        // a.click();
+        // a.remove();
+
+        if(db){
+            addMediaToGallery(url, "img");
+        }
 
         setTimeout(function(){
             innerDiv.classList.remove("capture-animation")
@@ -108,6 +120,7 @@ usermediaPromise.
     for(let i=0; i<filterArr.length; i++){
         filterArr[i].addEventListener("click", function(){
             filterColor = filterArr[i].style.backgroundColor;
+            console.log(filterColor)
             filterOverlayContainer.style.backgroundColor = filterColor;
         })
     }
@@ -147,6 +160,11 @@ usermediaPromise.
             scaleLevel = scaleLevel - 0.1;
             videoElem.style.transform = `scale(${scaleLevel})`;
         }
+    })
+
+    // directing to gallery
+    gallery.addEventListener("click", function(){
+        location.assign("gallery.html")
     })
 // to get video elem height and width -> videoHeight and videoWidth
 // keep the image centered after scaling
