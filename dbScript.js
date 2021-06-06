@@ -10,7 +10,6 @@ indexDbObj.addEventListener("error", function(){
 })
 
 indexDbObj.addEventListener("upgradeneeded", function(){
-    console.log("Hello1")
     db = indexDbObj.result; // creates database, if not exists
     // creating table
     db.createObjectStore("gallery", {
@@ -32,7 +31,7 @@ function addMediaToGallery(data, type){
 }
 
 function viewMedia(){
-    let body = document.querySelector("body");
+    let mediaContainer = document.querySelector(".media-container");
     let txAccess = db.transaction("gallery", "readonly");
     let galleryStore = txAccess.objectStore("gallery");
 
@@ -69,7 +68,7 @@ function viewMedia(){
                 videoContainer.appendChild(deleteBtn);
                 videoContainer.appendChild(downloadBtn);
 
-                body.appendChild(videoContainer);
+                mediaContainer.appendChild(videoContainer);
             }else{  
                 let imageContainer = document.createElement("div");
                 imageContainer.setAttribute("data-mId", cursor.value.mId);
@@ -94,7 +93,7 @@ function viewMedia(){
                 imageContainer.appendChild(deleteBtn);
                 imageContainer.appendChild(downloadBtn);
 
-                body.appendChild(imageContainer);
+                mediaContainer.appendChild(imageContainer);
             }
 
             cursor.continue();
